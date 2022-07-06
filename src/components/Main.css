@@ -62,3 +62,8 @@
     margin-right: 15px;
     color: #f04c64;
 }
+
+.tasks li div{
+    display: flex;
+    align-items: center;
+}

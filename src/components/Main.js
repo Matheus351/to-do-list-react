@@ -6,10 +6,7 @@ export default class Main extends Component{
 
     state = {
         newTask: '',
-        tasks:[
-          'estudar react',
-          'programar'
-        ]
+        tasks:[]
     }
 
   inputChange = (e)=>{
@@ -18,13 +15,30 @@ export default class Main extends Component{
     })
   }
 
+  handleSubmit = (e)=>{
+    console.log('oi')
+     e.preventDefault()
+     const {tasks} = this.state
+     let {newTask} = this.state
+     newTask = newTask.trim()//eliminates white spaces
+
+     if(tasks.indexOf(newTask)!==-1) return
+
+     const newTasks = [...tasks]
+
+     this.setState({
+      tasks:[...newTasks, newTask],
+     })
+  }
+
   render(){
     const {newTask,tasks} = this.state
+  
     return (
         <div className="main">
             <h1>To-Do List</h1>
 
-            <form className="form" action="#">
+            <form  onSubmit={this.handleSubmit} className="form" action="#">
                <input onChange={this.inputChange} type="text" value={newTask}></input>
                <button type="submit">
                 <FaPlus/>
@@ -32,19 +46,20 @@ export default class Main extends Component{
             </form>
            
            <ul className='tasks'>
-             {tasks.map(task=>{
-              return <li key={task}>
+             {tasks.map(task=>(
+
+              <li key={task}>
                 {task}
+                
                 <div>
                   <FaEdit className='edit'/>
                   <FaWindowClose className='delete'/>
                 </div>
                 </li>
-             })}
+
+            ))}
            </ul>
-            
         </div>
-    )
-       
+    ) 
   }
 }
