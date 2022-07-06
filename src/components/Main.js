@@ -6,7 +6,8 @@ export default class Main extends Component{
 
     state = {
         newTask: '',
-        tasks:[]
+        tasks:[],
+        index:-1
     }
 
   inputChange = (e)=>{
@@ -16,9 +17,9 @@ export default class Main extends Component{
   }
 
   handleSubmit = (e)=>{
-    console.log('oi')
+  
      e.preventDefault()
-     const {tasks} = this.state
+     const {tasks, index} = this.state
      let {newTask} = this.state
      newTask = newTask.trim()//eliminates white spaces
 
@@ -26,9 +27,42 @@ export default class Main extends Component{
 
      const newTasks = [...tasks]
 
+     if(index===-1){
+      this.setState({
+        tasks:[...newTasks, newTask],
+        newTask:'' //clear input
+       })
+     }else{
+     
+       newTasks[index] = newTask
+
+       this.setState({
+        tasks:[...newTasks],
+        index:-1,
+       })
+     }
+
+    
+  }
+
+  handleDelete = (e,index)=>{
+     const {tasks} = this.state
+     const newTasks = [...tasks]
+     newTasks.splice(index,1)
+
      this.setState({
-      tasks:[...newTasks, newTask],
+      tasks:[...newTasks]
      })
+  }
+
+  handleEdit = (e,index)=>{
+    const {tasks} = this.state
+
+
+    this.setState({
+      index:index,
+      newTask:tasks[index]
+    })
   }
 
   render(){
@@ -46,18 +80,23 @@ export default class Main extends Component{
             </form>
            
            <ul className='tasks'>
-             {tasks.map(task=>(
+             {tasks.map((task,index)=>(
 
-              <li key={task}>
-                {task}
-                
-                <div>
-                  <FaEdit className='edit'/>
-                  <FaWindowClose className='delete'/>
-                </div>
-                </li>
+               <li key={task}>
+                 {task}
 
-            ))}
+                 <div>
+                   <FaEdit
+                     onClick={(e) => this.handleEdit(e, index)}
+                     className='edit' />
+
+                   <FaWindowClose
+                     onClick={(e) => this.handleDelete(e, index)}
+                     className='delete' />
+                 </div>
+               </li>
+
+             ))}
            </ul>
         </div>
     ) 
