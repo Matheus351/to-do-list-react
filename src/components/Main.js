@@ -2,6 +2,7 @@ import './Main.css'
 import React,{Component} from "react";
 import {FaPlus,FaEdit,FaWindowClose} from 'react-icons/fa'
 
+
 export default class Main extends Component{
 
     state = {
@@ -9,6 +10,26 @@ export default class Main extends Component{
         tasks:[],
         index:-1
     }
+ 
+
+  componentDidMount(){
+
+    const tasks = JSON.parse(localStorage.getItem('tasks'))
+
+    if(!tasks) return
+
+    this.setState({tasks})
+  }
+  
+  
+  componentDidUpdate(prevProps, prevState){
+
+    const {tasks} = this.state
+
+    if(tasks === prevState.tasks) return
+
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+  }
 
   inputChange = (e)=>{
     this.setState({
