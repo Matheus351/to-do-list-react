@@ -8,4 +8,8 @@
 body{
   font-family: 'Open Sans', sans-serif;
   background-color: #0c1f31e2;
+  background-image: url('../public/working.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }

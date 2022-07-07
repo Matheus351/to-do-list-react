@@ -100,7 +100,7 @@ export default class Main extends Component{
            
            <Tasks
             handleEdit = {this.handleEdit}
-            handleSubmit = {this.handleSubmit}
+            handleSubmit = {this.handleDelete}
             tasks = {tasks}
            />
         </div>
